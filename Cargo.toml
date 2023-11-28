@@ -1,0 +1,18 @@
+[package]
+name = "dprint-plugin-yaml"
+version = "0.1.0"
+authors = ["Tristan F. <leodog896@gmail.com>"]
+edition = "2021"
+homepage = "https://github.com/LeoDog896/dprint-plugin-yaml"
+license = "MIT"
+repository = "https://github.com/LeoDog896/dprint-plugin-yaml"
+description = "YAML formatter for dprint."
+
+[dependencies]
+anyhow = "1.0.75"
+dprint-core = { version = "0.65", features = ["wasm"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["preserve_order"] }
+
+[lib]
+crate-type = ["lib", "cdylib"]
