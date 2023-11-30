@@ -10,7 +10,7 @@ description = "YAML formatter for dprint."
 
 [dependencies]
 anyhow = "1.0.75"
-dprint-core = { version = "0.65", features = ["wasm"] }
+dprint-core = { version = "0.65", features = ["wasm", "formatting"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }
 

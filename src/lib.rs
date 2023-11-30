@@ -8,6 +8,7 @@ use dprint_core::plugins::FileMatchingInfo;
 use dprint_core::plugins::PluginInfo;
 use dprint_core::plugins::SyncPluginHandler;
 use dprint_core::plugins::SyncPluginInfo;
+use dprint_core::generate_plugin_code;
 use serde::Serialize;
 use std::path::Path;
 
@@ -18,15 +19,15 @@ pub struct Configuration {
     line_width: u32, // for example
 }
 
-pub struct MyPluginHandler {}
+pub struct YamlPluginHandler {}
 
-impl MyPluginHandler {
+impl YamlPluginHandler {
     const fn new() -> Self {
-        MyPluginHandler {}
+        YamlPluginHandler {}
     }
 }
 
-impl SyncPluginHandler<Configuration> for MyPluginHandler {
+impl SyncPluginHandler<Configuration> for YamlPluginHandler {
     fn plugin_info(&mut self) -> SyncPluginInfo {
         SyncPluginInfo {
             info: PluginInfo {
@@ -70,16 +71,18 @@ impl SyncPluginHandler<Configuration> for MyPluginHandler {
             diagnostics,
         }
     }
-
+    
     fn format(
         &mut self,
         file_path: &Path,
         file_text: Vec<u8>,
         config: &Configuration,
-        mut format_with_host: impl FnMut(&Path, String, &ConfigKeyMap) -> Result<Option<Vec<u8>>>,
+        mut format_with_host: impl FnMut(&Path, Vec<u8>, &ConfigKeyMap) -> Result<Option<Vec<u8>>>,
     ) -> Result<Option<Vec<u8>>> {
         // format here
+
+        Ok(Some(vec![]))
     }
 }
 
-generate_plugin_code!(MyPluginHandler, MyPluginHandler::new());
+generate_plugin_code!(YamlPluginHandler, YamlPluginHandler::new());
