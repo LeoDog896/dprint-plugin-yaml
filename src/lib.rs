@@ -9,8 +9,11 @@ use dprint_core::plugins::PluginInfo;
 use dprint_core::plugins::SyncPluginHandler;
 use dprint_core::plugins::SyncPluginInfo;
 use dprint_core::generate_plugin_code;
+use format::fmt;
 use serde::Serialize;
 use std::path::Path;
+
+mod format;
 
 #[derive(Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -74,14 +77,15 @@ impl SyncPluginHandler<Configuration> for YamlPluginHandler {
     
     fn format(
         &mut self,
-        file_path: &Path,
+        _file_path: &Path,
         file_text: Vec<u8>,
-        config: &Configuration,
-        mut format_with_host: impl FnMut(&Path, Vec<u8>, &ConfigKeyMap) -> Result<Option<Vec<u8>>>,
+        _config: &Configuration,
+        mut _format_with_host: impl FnMut(&Path, Vec<u8>, &ConfigKeyMap) -> Result<Option<Vec<u8>>>,
     ) -> Result<Option<Vec<u8>>> {
         // format here
 
-        Ok(Some(vec![]))
+        let yaml = fmt(String::from_utf8(file_text.as_slice().to_vec())?.as_str())?;
+        Ok(Some(yaml.into_bytes()))
     }
 }
 
