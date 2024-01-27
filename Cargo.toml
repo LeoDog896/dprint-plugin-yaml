@@ -12,8 +12,24 @@ description = "YAML formatter for dprint."
 anyhow = "1.0"
 dprint-core = { version = "0.65", features = ["wasm", "formatting"] }
 serde = { version = "1.0", features = ["derive"] }
-serde_json = { version = "1.0", features = ["preserve_order"] }
+serde_json = { version = "1.0", features = ["preserve_order"], optional = true }
 serde_yaml = "0.9"
+
+[dev-dependencies]
+dprint-development = "0.9.5"
+serde_json = { version = "1.0" }
 
 [lib]
 crate-type = ["lib", "cdylib"]
+
+[profile.release]
+opt-level = 3
+debug = false
+lto = true
+debug-assertions = false
+overflow-checks = false
+panic = "abort"
+
+[features]
+wasm = ["serde_json", "dprint-core/wasm"]
+tracing = ["dprint-core/tracing"]
